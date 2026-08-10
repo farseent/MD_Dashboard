@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
-import { X, Settings2, Plus, DollarSign, Tag, Calendar, MapPin, FileText } from 'lucide-react'
+import { X, Settings2, Plus, IndianRupee, Tag, Calendar, MapPin, FileText } from 'lucide-react'
 import Modal from '../../../components/modal/Modal'
 import ManageCategoriesModal from './ManageCategoriesModal'
 import { getBranchOrFranchise, createExpenseCategory, getExpenseCategories } from '../../../api/expenseAPI'
@@ -447,7 +447,7 @@ export default function AddExpenseModal({
               </label>
               <div className="relative">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-fg-subtle">
-                  <DollarSign size={18} />
+                  <IndianRupee size={18} />
                 </div>
                 <input
                   id="amount"
