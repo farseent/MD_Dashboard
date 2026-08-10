@@ -25,6 +25,7 @@ import {
   getExpenseCategoryShare,
   getExpenseTrend,
   updateExpense,
+  updateExpenseStatus
 } from '../../api/expenseAPI'
 
 const emptySummary = {
@@ -188,6 +189,19 @@ export default function ExpensesPage() {
     }
   }
 
+  const handleStatusChange = async (id, status) => {
+    try {
+      await updateExpenseStatus(id, status)
+
+      // Optimistic UI update (fast UX)
+      setExpenses(prev =>
+        prev.map(e => (e.id === id ? { ...e, status } : e))
+      )
+    } catch (error) {
+      console.error("Failed to update status", error)
+    }
+  }
+
   const handleEditClick = useCallback((expense) => {
     setEditingExpense(expense)
     setIsAddModalOpen(true)
@@ -227,6 +241,37 @@ export default function ExpensesPage() {
     { key: 'locationModel', label: 'Type', sortable: true },
     { key: 'frequency', label: 'Frequency', sortable: true },
     { key: 'amount', label: 'Amount', sortable: true, render: (r) => formatCurrency(r.amount) },
+    { key: 'expenseDate', label: 'Date', sortable: true, render: (r) => new Date(r.expenseDate).toLocaleDateString('en-IN') },
+    {
+      key: 'status',
+      label: 'Status',
+      sortable: true,
+      render: (r) => {
+        const isPaid = r.status === 'paid'
+
+        return (
+          <select
+            value={r.status || 'pending'} 
+            onChange={(e) => handleStatusChange(r.id, e.target.value)}
+            className={`px-2 py-1 rounded-md text-xs font-medium border
+              ${isPaid 
+                ? 'bg-green-100 text-green-700 border-green-300 dark:bg-green-900 dark:text-green-300 dark:border-green-700' 
+                : 'bg-yellow-100 text-yellow-700 border-yellow-300 dark:bg-yellow-900 dark:text-yellow-300 dark:border-yellow-700'
+              }`}
+          >
+            <option value="unpaid" className="bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-200">
+              Unpaid
+            </option>
+            <option value="partially_paid" className="bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-200">
+              Partially Paid
+            </option>
+            <option value="paid" className="bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-200">
+              Paid
+            </option>
+          </select>
+        )
+      }
+    },
     {
       key: 'actions',
       label: '',

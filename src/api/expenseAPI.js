@@ -36,6 +36,11 @@ export const updateExpense = async (id, payload) => {
   return data;
 };
 
+export const updateExpenseStatus = async (id, paymentStatus) => {
+  const { data } = await api.patch(`/expense/${id}/status`, { paymentStatus });
+  return data;
+};
+
 // ==============================
 // EXPENSE CATEGORIES
 // ==============================
