@@ -7,7 +7,7 @@ export const LOCATION_MODEL_OPTIONS = [
   { value: 'Franchisee', label: 'Franchise' },
 ]
 
-export const FREQUENCY_OPTIONS = ['Daily', 'Weekly', 'Monthly', 'Yearly'].map((f) => ({
+export const FREQUENCY_OPTIONS = ['Daily', 'Weekly', 'Monthly', 'Yearly', 'No frequency'].map((f) => ({
   value: f,
   label: f,
 }))
