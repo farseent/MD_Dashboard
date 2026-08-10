@@ -529,7 +529,8 @@ export default function AddExpenseModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-xl bg-accent-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-accent-700 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:shadow-none active:scale-[0.98]"
+              className="rounded-xl bg-accent-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:text-accent-700 hover:scale-105
+               hover:bg-accent-700 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:shadow-none active:scale-[0.98]"
             >
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
