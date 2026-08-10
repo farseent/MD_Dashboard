@@ -7,6 +7,15 @@ import ManageCategoriesModal from './ManageCategoriesModal'
 import { getBranchOrFranchise, createExpenseCategory, getExpenseCategories } from '../../../api/expenseAPI'
 import { LOCATION_MODEL_OPTIONS, FREQUENCY_OPTIONS } from './expenseOptions'
 
+// Local YYYY-MM-DD (avoids UTC off-by-one you'd get from toISOString())
+const getTodayDateString = () => {
+  const d = new Date()
+  const year = d.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 const initialForm = {
   expenseName: '',
   locationModel: LOCATION_MODEL_OPTIONS[0],
@@ -14,6 +23,7 @@ const initialForm = {
   category: null,
   frequency: FREQUENCY_OPTIONS[2], // Monthly
   amount: '',
+  date: getTodayDateString(),
   notes: '',
 }
 
@@ -42,6 +52,7 @@ const mapExpenseToForm = (expense) => {
     : null
 
   const frequency = FREQUENCY_OPTIONS.find((o) => o.value === expense.frequency) || FREQUENCY_OPTIONS[2]
+  const date = expense.expenseDate ? String(expense.expenseDate).slice(0, 10) : getTodayDateString()
 
   return {
     expenseName: expense.expenseName || '',
@@ -50,6 +61,7 @@ const mapExpenseToForm = (expense) => {
     category,
     frequency,
     amount: expense.amount != null ? String(expense.amount) : '',
+    date,
     notes: expense.notes || '',
   }
 }
@@ -199,6 +211,7 @@ export default function AddExpenseModal({
       next.branchOrFranchise = `Select a ${form.locationModel.label.toLowerCase()}`
     if (!form.category) next.category = 'Select a category'
     if (!form.amount || Number(form.amount) <= 0) next.amount = 'Enter a valid amount'
+    if (!form.date) next.date = 'Select a date'
     setErrors(next)
     return Object.keys(next).length === 0
   }
@@ -215,6 +228,7 @@ export default function AddExpenseModal({
       category: form.category.value,
       frequency: form.frequency.value,
       amount: Number(form.amount),
+      expenseDate: form.date,
       notes: form.notes.trim(),
     }
 
@@ -425,32 +439,59 @@ export default function AddExpenseModal({
             </div>
           </div>
 
-          {/* Amount */}
-          <div>
-            <label className="block text-sm font-medium text-fg-muted mb-1.5" htmlFor="amount">
-              Amount
-            </label>
-            <div className="relative">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-fg-subtle">
-                <DollarSign size={18} />
+          {/* Amount & Date */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-fg-muted mb-1.5" htmlFor="amount">
+                Amount
+              </label>
+              <div className="relative">
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-fg-subtle">
+                  <DollarSign size={18} />
+                </div>
+                <input
+                  id="amount"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  className="w-full rounded-xl border border-border-subtle bg-surface pl-10 pr-4 py-2.5 text-sm text-fg placeholder:text-fg-subtle transition-all focus:border-accent-500 focus:bg-surface-raised focus:outline-none focus:ring-2 focus:ring-accent-500/20"
+                  placeholder="0.00"
+                  value={form.amount}
+                  onChange={handleTextChange('amount')}
+                />
               </div>
-              <input
-                id="amount"
-                type="number"
-                min="0"
-                step="0.01"
-                className="w-full rounded-xl border border-border-subtle bg-surface pl-10 pr-4 py-2.5 text-sm text-fg placeholder:text-fg-subtle transition-all focus:border-accent-500 focus:bg-surface-raised focus:outline-none focus:ring-2 focus:ring-accent-500/20"
-                placeholder="0.00"
-                value={form.amount}
-                onChange={handleTextChange('amount')}
-              />
+              {errors.amount && (
+                <p className="mt-1.5 text-sm text-negative-500 flex items-center gap-1">
+                  <span className="inline-block w-1 h-1 rounded-full bg-negative-500" />
+                  {errors.amount}
+                </p>
+              )}
             </div>
-            {errors.amount && (
-              <p className="mt-1.5 text-sm text-negative-500 flex items-center gap-1">
-                <span className="inline-block w-1 h-1 rounded-full bg-negative-500" />
-                {errors.amount}
-              </p>
-            )}
+
+            <div>
+              <label className="block text-sm font-medium text-fg-muted mb-1.5" htmlFor="date">
+                <div className="flex items-center gap-1.5">
+                  <Calendar size={16} className="text-fg-subtle" />
+                  Date
+                </div>
+              </label>
+              <div className="relative">
+                <input
+                  id="date"
+                  type="date"
+                  max={getTodayDateString()}
+                  className="w-full rounded-xl border border-border-subtle bg-surface px-4 py-2.5 text-sm text-fg transition-all focus:border-accent-500 focus:bg-surface-raised focus:outline-none focus:ring-2 focus:ring-accent-500/20 [color-scheme:light] dark:[color-scheme:dark]"
+                  value={form.date}
+                  onChange={handleTextChange('date')}
+                />
+              </div>
+              {errors.date && (
+                <p className="mt-1.5 text-sm text-negative-500 flex items-center gap-1">
+                  <span className="inline-block w-1 h-1 rounded-full bg-negative-500" />
+                  {errors.date}
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Notes */}

@@ -63,7 +63,7 @@ export default function TableFilterBar({
     className={`
       flex h-9 w-9 items-center justify-center rounded-lg border transition-colors
       ${hasActiveFilters 
-        ? 'border-primary/40 bg-primary/10 text-primary hover:bg-primary/20' 
+        ? 'border-primary/40 bg-primary/10 text-primary hover:bg-primary/20 transition-all hover:text-accent-700 hover:scale-105' 
         : 'border-border-subtle bg-surface-2 text-fg-muted hover:border-primary/40 hover:bg-primary/10 hover:text-primary'
       }
     `}

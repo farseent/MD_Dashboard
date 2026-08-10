@@ -236,7 +236,7 @@ export default function ExpensesPage() {
         <button
           type="button"
           onClick={() => handleEditClick(r)}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-border-subtle bg-accent-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border-subtle bg-accent-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:text-accent-700 hover:scale-105"
           title="Edit expense"
         >
           <Pencil size={14} />
@@ -387,7 +387,7 @@ export default function ExpensesPage() {
         <h3 className="text-sm font-semibold text-fg">Expense Log</h3>
         <button
           onClick={handleAddClick}
-          className="flex items-center gap-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+          className="flex items-center gap-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-all hover:scale-105"
         >
           <Plus size={16} />
           Add Expense
