@@ -480,7 +480,7 @@ export default function AddExpenseModal({
                   id="date"
                   type="date"
                   max={getTodayDateString()}
-                  className="w-full rounded-xl border border-border-subtle bg-surface px-4 py-2.5 text-sm text-fg transition-all focus:border-accent-500 focus:bg-surface-raised focus:outline-none focus:ring-2 focus:ring-accent-500/20 [color-scheme:light] dark:[color-scheme:dark]"
+                  className="w-full rounded-xl border border-border-subtle bg-surface px-4 py-2.5 text-sm text-fg transition-all focus:border-accent-500 focus:bg-surface-raised focus:outline-none focus:ring-2 focus:ring-accent-500/20 scheme-light dark:scheme-dark"
                   value={form.date}
                   onChange={handleTextChange('date')}
                 />
