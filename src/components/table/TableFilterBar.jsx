@@ -22,7 +22,7 @@ export default function TableFilterBar({
       return filter && v && v !== 'All'
     })
   return (
-    <div className="flex flex-wrap items-center gap-3 border-b border-border-subtle bg-surface-raised px-4 py-3">
+    <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border-subtle bg-surface-raised px-4 py-3">
       <div className="relative min-w-55 flex-1">
         <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-fg-subtle" />
         <input

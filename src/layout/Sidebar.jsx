@@ -63,7 +63,7 @@ export default function Sidebar({ isExpanded, onExpand, onCollapse }) {
               title={!isExpanded ? label : undefined}
               className={({ isActive }) =>
                 clsx(
-                  'flex items-center gap-3 overflow-hidden whitespace-nowrap rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                  'flex items-center overflow-hidden whitespace-nowrap rounded-xl px-3 py-2.5 text-sm font-medium transition-colors',
                   !isExpanded && 'justify-center',
                   isActive
                     ? 'bg-accent-600 text-white'
@@ -89,13 +89,13 @@ export default function Sidebar({ isExpanded, onExpand, onCollapse }) {
           <button
             onClick={toggleTheme}
             className={clsx(
-              'flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-brand-400 transition-colors duration-300 hover:bg-brand-800 hover:text-white',
+              'flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-brand-400 transition-colors duration-300 hover:bg-brand-700 hover:text-white',
               isExpanded ? 'w-full justify-between gap-3' : 'h-10 w-10 justify-center'
             )}
             title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
-            <span className="flex items-center gap-3">
+            <span className="flex items-center">
               <span className="flex h-4 w-4 shrink-0 items-center justify-center">
                 {isDark ? <Sun className="h-4 w-4 text-amber-400 opacity-100" />: <Moon className="h-4 w-4" /> }
               </span>
